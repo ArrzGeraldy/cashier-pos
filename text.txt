@@ -1,0 +1,89 @@
+// untuk total payment harus lebih besar dari total price, untuk total cost harus lebih kecil dari total price, range nilai dari total_* 5000-40000
+CREATE TABLE `sales` (
+  `id` CHAR(36) NOT NULL,  -- UUID stored as a CHAR(36)
+  `customer_name` VARCHAR(255) NOT NULL,
+  `total_payment` INT UNSIGNED DEFAULT 0,
+  `total_cost` INT UNSIGNED DEFAULT 0,
+  `total_price` INT UNSIGNED NOT NULL,
+  `payment_type` VARCHAR(255) NULL,
+  `qris_url` VARCHAR(255) NULL,
+  `money_changes` INT UNSIGNED DEFAULT 0,
+  `status` VARCHAR(255) DEFAULT 'UNPAID',
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+// semua discount_* di null kan saja, amount harus berasal dari quantity * product_price, final_price = amount, product_cost < product_price
+CREATE TABLE `sale_details` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sale_id` CHAR(36) NOT NULL,
+  `discount_name` VARCHAR(255) NULL,
+  `discount_min_unit` INT UNSIGNED NULL,
+  `discount_value` INT UNSIGNED NULL,
+  `discount_percentage` INT UNSIGNED NULL,
+  `product_name` VARCHAR(255) NOT NULL,
+  `product_cost` VARCHAR(255) NOT NULL,
+  `product_price` INT UNSIGNED NOT NULL,
+  `final_price` INT UNSIGNED NOT NULL,
+  `quantity` INT UNSIGNED NOT NULL,
+  `amount` INT UNSIGNED NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE
+);
+
+
+-- Insert dummy data into sales table
+INSERT INTO `sales` (`id`, `customer_name`, `total_payment`, `total_cost`, `total_price`, `payment_type`, `qris_url`, `money_changes`, `status`, `created_at`, `updated_at`)
+VALUES
+(UUID(), 'Customer 1', 25000, 10000, 20000, 'Credit Card', 'http://example.com/qris/1', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 2', 30000, 15000, 25000, 'Cash', 'http://example.com/qris/2', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 3', 35000, 20000, 30000, 'Credit Card', 'http://example.com/qris/3', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 4', 40000, 25000, 35000, 'Cash', 'http://example.com/qris/4', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 5', 45000, 30000, 40000, 'Credit Card', 'http://example.com/qris/5', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 6', 25000, 10000, 20000, 'Credit Card', 'http://example.com/qris/6', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 7', 30000, 15000, 25000, 'Cash', 'http://example.com/qris/7', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 8', 35000, 20000, 30000, 'Credit Card', 'http://example.com/qris/8', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 9', 40000, 25000, 35000, 'Cash', 'http://example.com/qris/9', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 10', 45000, 30000, 40000, 'Credit Card', 'http://example.com/qris/10', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 11', 25000, 10000, 20000, 'Credit Card', 'http://example.com/qris/11', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 12', 30000, 15000, 25000, 'Cash', 'http://example.com/qris/12', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 13', 35000, 20000, 30000, 'Credit Card', 'http://example.com/qris/13', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 14', 40000, 25000, 35000, 'Cash', 'http://example.com/qris/14', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 15', 45000, 30000, 40000, 'Credit Card', 'http://example.com/qris/15', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 16', 25000, 10000, 20000, 'Credit Card', 'http://example.com/qris/16', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 17', 30000, 15000, 25000, 'Cash', 'http://example.com/qris/17', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 18', 35000, 20000, 30000, 'Credit Card', 'http://example.com/qris/18', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 19', 40000, 25000, 35000, 'Cash', 'http://example.com/qris/19', 5000, 'PAID', NOW(), NOW()),
+(UUID(), 'Customer 20', 45000, 30000, 40000, 'Credit Card', 'http://example.com/qris/20', 5000, 'PAID', NOW(), NOW());
+
+
+
+
+
+
+-- Insert dummy data into sale_details table
+INSERT INTO `sale_details` (`sale_id`, `discount_name`, `discount_min_unit`, `discount_value`, `discount_percentage`, `product_name`, `product_cost`, `product_price`, `final_price`, `quantity`, `amount`, `created_at`, `updated_at`)
+VALUES
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 0), NULL, NULL, NULL, NULL, 'Product 1', '15000', 20000, 40000, 2, 40000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 1), NULL, NULL, NULL, NULL, 'Product 2', '10000', 15000, 30000, 2, 30000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 2), NULL, NULL, NULL, NULL, 'Product 3', '20000', 25000, 50000, 2, 50000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 3), NULL, NULL, NULL, NULL, 'Product 4', '25000', 30000, 60000, 2, 60000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 4), NULL, NULL, NULL, NULL, 'Product 5', '15000', 20000, 40000, 2, 40000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 5), NULL, NULL, NULL, NULL, 'Product 6', '10000', 15000, 30000, 2, 30000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 6), NULL, NULL, NULL, NULL, 'Product 7', '20000', 25000, 50000, 2, 50000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 7), NULL, NULL, NULL, NULL, 'Product 8', '25000', 30000, 60000, 2, 60000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 8), NULL, NULL, NULL, NULL, 'Product 9', '15000', 20000, 40000, 2, 40000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 9), NULL, NULL, NULL, NULL, 'Product 10', '10000', 15000, 30000, 2, 30000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 10), NULL, NULL, NULL, NULL, 'Product 11', '20000', 25000, 50000, 2, 50000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 11), NULL, NULL, NULL, NULL, 'Product 12', '25000', 30000, 60000, 2, 60000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 12), NULL, NULL, NULL, NULL, 'Product 13', '15000', 20000, 40000, 2, 40000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 13), NULL, NULL, NULL, NULL, 'Product 14', '10000', 15000, 30000, 2, 30000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 14), NULL, NULL, NULL, NULL, 'Product 15', '20000', 25000, 50000, 2, 50000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 15), NULL, NULL, NULL, NULL, 'Product 16', '25000', 30000, 60000, 2, 60000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 16), NULL, NULL, NULL, NULL, 'Product 17', '15000', 20000, 40000, 2, 40000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 17), NULL, NULL, NULL, NULL, 'Product 18', '10000', 15000, 30000, 2, 30000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 18), NULL, NULL, NULL, NULL, 'Product 19', '20000', 25000, 50000, 2, 50000, NOW(), NOW()),
+((SELECT `id` FROM `sales` LIMIT 1 OFFSET 19), NULL, NULL, NULL, NULL, 'Product 20', '25000', 30000, 60000, 2, 60000, NOW(), NOW());
