@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 
 const index = (props) => {
     const { message } = props.flash;
+    const { auth } = props;
 
     useEffect(() => {
         if (message) {
@@ -15,7 +16,7 @@ const index = (props) => {
         }
     }, [message]);
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <div className="flex flex-col lg:flex-row mt-4 lg:items-center gap-4 lg:justify-between">
                 <Link
                     href="/discount/create"

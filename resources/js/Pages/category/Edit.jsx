@@ -12,6 +12,8 @@ const Edit = (props) => {
         category_name: category.category_name,
     });
 
+    const { auth } = props;
+
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (e) => {
@@ -29,7 +31,7 @@ const Edit = (props) => {
     }, [props.errors.category_name]);
 
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread
                 breadHref={"/category"}
                 breadItem={"Category"}

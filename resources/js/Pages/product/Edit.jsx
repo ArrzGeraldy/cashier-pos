@@ -3,8 +3,9 @@ import Bread from "@/Components/shared/Bread";
 import PosLayout from "@/Layouts/PosLayout";
 
 const Edit = (props) => {
+    const { auth } = props;
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread breadHref={"/product"} breadItem={"Product"} page={"Add"} />
 
             <ProductFrom

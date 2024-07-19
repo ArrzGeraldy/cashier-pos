@@ -5,9 +5,9 @@ import PosLayout from "@/Layouts/PosLayout";
 import React from "react";
 
 const Edit = (props) => {
-    const { discount, product } = props;
+    const { discount, product, auth } = props;
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread
                 breadHref={"/discount"}
                 breadItem={"discount"}

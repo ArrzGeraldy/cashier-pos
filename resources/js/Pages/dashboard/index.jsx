@@ -8,7 +8,7 @@ const index = (props) => {
     const { chartData } = data;
 
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={props.auth.user} title={props.title}>
             {props.data && (
                 <StatisticsCards
                     expense={data.expense}

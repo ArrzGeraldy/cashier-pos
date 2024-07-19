@@ -10,8 +10,10 @@ const expenseData = {
 };
 
 const Add = (props) => {
+    const { auth } = props;
+
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread breadHref={"/expense"} breadItem={"Expense"} page={"Add"} />
             <ExpenseForm expenseData={expenseData} endPoint={"/expense"} />
         </PosLayout>

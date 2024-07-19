@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -75,90 +76,41 @@ Route::middleware('auth')->group(function() {
         Route::post('/payment/cash/{id}','cash');
     });
 
-    Route::controller(ExpenseController::class)->group(function(){
-        Route::get('/expense','index')->name('expense');
-        Route::get('/expense/add','add');
-        Route::get('/expense/{id}','edit');
-        Route::post('/expense','store');
-        Route::post('/expense/{id}','update');
-        Route::delete('/expense/{id}','destroy');
-    });
+    Route::middleware('super.admin')->group(function(){
 
-    Route::controller(DiscountController::class)->group(function(){
-        Route::get('/discount','index')->name('discount');
-        Route::get('/discount/create','create');
-        Route::get('/discount/edit/{id}','edit');
-        Route::post('/discount','store');
-        Route::put('/discount/update/{id}','update');
-        Route::delete('/discount/delete/{id}','destroy');
-    });
+        Route::controller(ExpenseController::class)->group(function(){
+            Route::get('/expense','index')->name('expense');
+            Route::get('/expense/add','add');
+            Route::get('/expense/{id}','edit');
+            Route::post('/expense','store');
+            Route::post('/expense/{id}','update');
+            Route::delete('/expense/{id}','destroy');
+        });
 
-    Route::controller(ReportController::class)->group(function(){
-        Route::get('/report','index')->name('report');
+        Route::controller(DiscountController::class)->group(function(){
+            Route::get('/discount','index')->name('discount');
+            Route::get('/discount/create','create');
+            Route::get('/discount/edit/{id}','edit');
+            Route::post('/discount','store');
+            Route::put('/discount/update/{id}','update');
+            Route::delete('/discount/delete/{id}','destroy');
+        });
+
+        Route::controller(ReportController::class)->group(function(){
+            Route::get('/report','index')->name('report');
+        });
+        
+        Route::controller(AccountController::class)->group(function(){
+            Route::get('/account','index')->name('account');
+            Route::get('/account/create','create');
+            Route::delete('/account/{id}','destroy');
+        });
+        
     });
+    
+
 });
 
 
-// Route::controller(DashboardController::class)->group(function(){
-//     Route::get('/','index');
-// });
-
-// Route::controller(ProductController::class)->group(function(){
-//     Route::get('/product','index')->name("product.index");
-//     Route::get('/product/add','add');
-//     Route::post('/product','store');
-//     Route::get('/product/edit/{id}','edit');
-//     Route::post('/product/update/{id}','update');
-//     Route::delete('/product/{id}','destroy');
-// });
-
-// Route::controller(CategoryController::class)->group(function(){
-//     Route::get('/category','index')->name("category.index");
-//     Route::get('/category/add','add');
-//     Route::get('/category/edit/{id}','edit');
-//     Route::patch('/category/update/{id}','update');
-//     Route::post('/category','store');
-//     Route::delete('/category/{id}','destroy');
-// });
-
-// Route::controller(CashierController::class)->group(function(){
-//     Route::get('/cashier','index')->name("cashier.index");
-// });
-
-
-// Route::controller(SaleController::class)->group(function(){
-//     Route::get('/sale','index')->name("sale.index");
-//     Route::post('/sale','store');
-//     Route::patch('/sale/cancel','cancel');
-//     Route::patch('/sale/update/status/{id}','updateStatus');
-//     Route::delete('/sale/{id}','destroy');
-//     Route::get('/sale/success/{id}','success')->name("sale.success");
-// });
-
-// Route::controller(PaymentController::class)->group(function(){
-//     Route::get('/payment/{id}','show')->name('payment');
-//     Route::post('/payment/cash/{id}','cash');
-// });
-
-// Route::controller(ExpenseController::class)->group(function(){
-//     Route::get('/expense','index')->name('expense');
-//     Route::get('/expense/add','add');
-//     Route::get('/expense/{id}','edit');
-//     Route::post('/expense','store');
-//     Route::post('/expense/{id}','update');
-//     Route::delete('/expense/{id}','destroy');
-// });
-
-// Route::controller(DiscountController::class)->group(function(){
-//     Route::get('/discount','index')->name('discount');
-//     Route::get('/discount/create','create');
-//     Route::get('/discount/edit/{id}','edit');
-//     Route::post('/discount','store');
-//     Route::put('/discount/update/{id}','update');
-//     Route::delete('/discount/delete/{id}','destroy');
-// });
-// Route::controller(ReportController::class)->group(function(){
-//     Route::get('/report','index')->name('report');
-// });
 
 require __DIR__.'/auth.php';

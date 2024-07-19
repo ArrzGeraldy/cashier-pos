@@ -29,13 +29,14 @@ const index = (props) => {
             router.get(`/sale?stts=${e.toLowerCase()}`);
         }
     };
+    const { auth } = props;
 
     useEffect(() => {
         props.flash.message && notifySuccess(props.flash.message);
     }, [props.flash.message]);
 
     return (
-        <PosLayout title={"Dashboar | Sale"}>
+        <PosLayout user={auth.user} title={"Dashboar | Sale"}>
             <Select onValueChange={(e) => handleFIlter(e)}>
                 <SelectTrigger className="w-[180px] border-none focus-visible:ring-0 shadow-md">
                     <SelectValue placeholder={sttsParams || "Filter"} />

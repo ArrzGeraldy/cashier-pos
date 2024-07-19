@@ -6,7 +6,7 @@ import { useReport } from "@/hooks/useReport";
 import PosLayout from "@/Layouts/PosLayout";
 import React, { useEffect, useState } from "react";
 
-const Index = () => {
+const Index = (props) => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const { report, chartData, isLoading, fetchReport, labels } = useReport();
@@ -30,7 +30,7 @@ const Index = () => {
     }, []);
 
     return (
-        <PosLayout title={"Report"}>
+        <PosLayout user={props.auth.user} title={"Report"}>
             <div className="flex gap-4">
                 <DatePicker
                     date={startDate}

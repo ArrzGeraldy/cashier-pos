@@ -14,9 +14,10 @@ const discountData = {
 
 const Add = (props) => {
     const [product, setProduct] = useState(null);
+    const { auth } = props;
 
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <SearchProduct setProduct={setProduct} />
             <Bread
                 className="mt-4"

@@ -1,5 +1,4 @@
 import Bread from "@/Components/shared/Bread";
-import LabelTitle from "@/Components/shared/LabelTitle";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import PosLayout from "@/Layouts/PosLayout";
@@ -12,6 +11,7 @@ const Add = (props) => {
         category_name: "",
     });
     const [isLoading, setIsLoading] = useState(false);
+    const { auth } = props;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +29,7 @@ const Add = (props) => {
     }, [props.errors.category_name]);
 
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread
                 breadHref={"/category"}
                 breadItem={"Category"}

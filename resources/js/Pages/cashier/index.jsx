@@ -12,6 +12,7 @@ const index = (props) => {
     const [cartItems, setCartItems] = useState(
         JSON.parse(localStorage.getItem("cartItems")) || []
     );
+    const { auth } = props;
 
     const [dataDialogProduct, setDataDialogProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -75,7 +76,7 @@ const index = (props) => {
     }, []);
 
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <div className="flex gap-8 relative">
                 <ProductDialog
                     dialogRef={dialogRef}

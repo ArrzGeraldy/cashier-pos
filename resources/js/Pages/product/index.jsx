@@ -13,7 +13,7 @@ const index = (props) => {
         }
     }, [props.flash.message]);
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={props.auth.user} title={props.title}>
             <div className="flex flex-col lg:flex-row mt-4 lg:items-center gap-4 lg:justify-between">
                 <Link
                     href="/product/add"

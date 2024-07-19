@@ -10,8 +10,10 @@ const product = {
     description: "",
 };
 const Add = (props) => {
+    const { auth } = props;
+
     return (
-        <PosLayout title={props.title}>
+        <PosLayout user={auth.user} title={props.title}>
             <Bread breadHref={"/product"} breadItem={"Product"} page={"Add"} />
             <ProductFrom
                 product={product}
